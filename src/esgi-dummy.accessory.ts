@@ -33,6 +33,7 @@ export class EsgiDummyAccessory implements AccessoryPlugin {
 
     updateActiveState(state: number, callback: CharacteristicSetCallback) {
         this.on = state;
+        console.log('state:', state);
         callback();
     }
 }
