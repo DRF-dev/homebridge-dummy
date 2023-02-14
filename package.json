@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "start": "tsc && node dist/main.js"
+    "start": "tsc && node dist/main.js",
+    "build": "tsc"
   },
   "keywords": [
     "homebridge-plugin"
