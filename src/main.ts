@@ -11,14 +11,7 @@ export default (api: API) => {
         const app = express()
 
         app.get('/', (req, res) => {
-            const uuid = api.hap.uuid.generate('VentilESGI');
-            const accessory = new api.platformAccessory(uuid, 'VentilESGI');
-
-            if (accessory) {
-                res.status(200).json({ accessory });
-            } else {
-                res.status(404).json({ message: 'Accessoire non trouvé.' });
-            }
+            res.status(200).json({ state: EsgiDummyAccessory1.on });
         });
 
         app.listen(4000, () => console.log('Listen on port 4000'));

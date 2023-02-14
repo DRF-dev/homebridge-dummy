@@ -4,12 +4,12 @@ import { API, Logging, AccessoryPlugin, Controller, ControllerServiceMap, Servic
 export class EsgiDummyAccessory1 implements AccessoryPlugin {
     private informationService: Service;
     private fanService: Service;
-    private on: number;
+    public static on: number;
 
     constructor(public logger: Logging, public config: AccessoryConfig, public api: API) {
         this.logger.info('ESGI Dummy started');
 
-        this.on = 0;
+        EsgiDummyAccessory1.on = 0;
 
         const informationService = new api.hap.Service.AccessoryInformation();
         informationService.setCharacteristic(api.hap.Characteristic.SerialNumber, 'randomserialnumber')
@@ -22,12 +22,6 @@ export class EsgiDummyAccessory1 implements AccessoryPlugin {
             .on('get', this.getActiveState.bind(this))
             .on('set', this.updateActiveState.bind(this));
         this.fanService = fanService;
-
-        const uuid = api.hap.uuid.generate('VentilESGI');
-        const accessory = new api.platformAccessory('VentilESGI', uuid);
-        accessory.addService(fanService);
-
-        api.registerPlatformAccessories('VentilESGI', 'VentilESGI', [accessory]);
     }
 
     getServices(): Service[] {
@@ -35,11 +29,11 @@ export class EsgiDummyAccessory1 implements AccessoryPlugin {
     }
 
     getActiveState(callback: CharacteristicGetCallback) {
-        callback(null, this.on);
+        callback(null, EsgiDummyAccessory1.on);
     }
 
     updateActiveState(state: number, callback: CharacteristicSetCallback) {
-        this.on = state;
+        EsgiDummyAccessory1.on = state;
         console.log('state:', state);
         /*axios.put('https://watchos-back.drfperso.ovh/api/user/1', {
             firstName: "John",
