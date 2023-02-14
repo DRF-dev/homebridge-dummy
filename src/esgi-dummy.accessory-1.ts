@@ -1,7 +1,7 @@
 import { API, Logging, AccessoryPlugin, Controller, ControllerServiceMap, Service, AccessoryConfig, CharacteristicGetCallback, CharacteristicSetCallback} from "homebridge";
 // import axios from 'axios';
 
-export class EsgiDummyAccessory implements AccessoryPlugin {
+export class EsgiDummyAccessory1 implements AccessoryPlugin {
     private informationService: Service;
     private fanService: Service;
     private on: number;
@@ -22,6 +22,12 @@ export class EsgiDummyAccessory implements AccessoryPlugin {
             .on('get', this.getActiveState.bind(this))
             .on('set', this.updateActiveState.bind(this));
         this.fanService = fanService;
+
+        const uuid = api.hap.uuid.generate('VentilESGI');
+        const accessory = new api.platformAccessory('VentilESGI', uuid);
+        accessory.addService(fanService);
+
+        api.registerPlatformAccessories('VentilESGI', 'VentilESGI', [accessory]);
     }
 
     getServices(): Service[] {
